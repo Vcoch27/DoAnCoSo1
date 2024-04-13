@@ -1,2 +1,0 @@
-id = 4, name = Quyen, ages = 20, luong = 90000.0
-id = 3, name = cocc, ages = 12, luong = 12312.0
