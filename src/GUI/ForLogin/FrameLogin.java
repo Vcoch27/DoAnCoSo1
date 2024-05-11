@@ -25,7 +25,7 @@ public class FrameLogin extends JFrame {
 
 //    private JPanel panelConvert;;
 	public FrameLogin() throws IOException {
-
+		setResizable(false);
 		setTitle("Login or Register");
 		setBounds(100, 100, 764, 521);
 		contentPane = new JPanel();

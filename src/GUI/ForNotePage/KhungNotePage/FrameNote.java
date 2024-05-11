@@ -71,6 +71,7 @@ public class FrameNote extends JFrame {
 	public FrameNote()
 			throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		setBounds(690, 150, 500, 635);
 //		setBounds(100, 150, 1285, 635);
 		contentPane = new JPanel();

@@ -57,7 +57,7 @@ public class FrameCommunity extends JFrame {
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1285, 692);
 		getContentPane().setLayout(null);
-
+		setResizable(false);
 		JPanel paneForMini = new JPanel();
 		paneForMini.setBounds(0, 52, 1269, 220);
 		getContentPane().add(paneForMini);
@@ -116,7 +116,7 @@ public class FrameCommunity extends JFrame {
 
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(0, 0, 1285, 52);
-		panel_1.setBackground(new Color(106, 90, 205));
+		panel_1.setBackground(new Color(216, 216, 216));
 		getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
@@ -130,8 +130,16 @@ public class FrameCommunity extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				FrameAddPost addPostFrame = new FrameAddPost(slideShow);
-				addPostFrame.setVisible(true);
+				FrameAddPost addPostFrame;
+				try {
+					addPostFrame = new FrameAddPost(slideShow);
+					addPostFrame.setVisible(true);
+					addPostFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 		});
 

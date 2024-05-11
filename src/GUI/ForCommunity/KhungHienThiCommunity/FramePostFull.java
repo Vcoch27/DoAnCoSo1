@@ -139,7 +139,7 @@ public class FramePostFull extends JFrame {
 		});
 		lblNewLabel_4.setBounds(909, 3, 46, 45);
 		panel.add(lblNewLabel_4);
-
+		setResizable(false);
 		JPanel panelUserPost = new JPanel();
 		panelUserPost.setBounds(0, 0, 972, 45);
 		contentPane.add(panelUserPost);
