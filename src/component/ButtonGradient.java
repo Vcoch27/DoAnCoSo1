@@ -54,7 +54,7 @@ public class ButtonGradient extends JButton {
     private boolean pressed;
     private Point pressedLocation;
     private float pressedSize;
-    private float sizeSpeed = 1f;
+    private float sizeSpeed = 2.5f;
     private float alphaPressed = 0.5f;
 
     public ButtonGradient() {

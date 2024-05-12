@@ -7,10 +7,27 @@ import javax.swing.JList;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PaneMenuLuaChonMucDanhPhap extends JPanel {
 	private Color mauChuDao = new Color(100,149,237);
 	public JPanel donChat;
+	public JPanel akan ;
+	public JPanel anken;
+	public JPanel ankin;
+	public JPanel hc;
+	public JPanel ancol;
+	public JPanel phenol;
+	public JPanel andehit;
+	public JPanel keton;
+	public JPanel ion;
+	public JPanel base;
+	public JPanel acid;
+	public JPanel ca;
+	public JPanel salt;
+	public JPanel halogen;
+	public JPanel ocid;
 	/**
 	 * Create the panel.
 	 */
@@ -36,159 +53,160 @@ public class PaneMenuLuaChonMucDanhPhap extends JPanel {
 		lblNewLabel_2_1.setBounds(126, 319, 248, 46);
 		panel.add(lblNewLabel_2_1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1.setBackground(new Color(254, 215, 180));
-		panel_1.setBounds(279, 367, 201, 30);
-		panel.add(panel_1);
+	 akan = new JPanel();
+		akan.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		akan.setBackground(new Color(254, 215, 180));
+		akan.setBounds(279, 367, 201, 30);
+		panel.add(akan);
 		
-		JLabel lblNewLabel_3_4 = new JLabel("Alkane");
-		panel_1.add(lblNewLabel_3_4);
-		lblNewLabel_3_4.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		JLabel lbakan = new JLabel("Alkane");
+		akan.add(lbakan);
+		lbakan.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1.setBackground(new Color(254, 215, 180));
-		panel_1_1.setBounds(279, 408, 201, 30);
-		panel.add(panel_1_1);
+		  anken = new JPanel();
+		anken.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		anken.setBackground(new Color(254, 215, 180));
+		anken.setBounds(279, 408, 201, 30);
+		panel.add(anken);
 		
 		JLabel lblNewLabel_3_1_2 = new JLabel("Alkene");
-		panel_1_1.add(lblNewLabel_3_1_2);
+		anken.add(lblNewLabel_3_1_2);
 		lblNewLabel_3_1_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1 = new JPanel();
-		panel_1_1_1.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1.setBackground(new Color(254, 215, 180));
-		panel_1_1_1.setBounds(279, 449, 201, 30);
-		panel.add(panel_1_1_1);
+		  ankin = new JPanel();
+		ankin.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		ankin.setBackground(new Color(254, 215, 180));
+		ankin.setBounds(279, 449, 201, 30);
+		panel.add(ankin);
 		
 		JLabel lblNewLabel_3_2_2 = new JLabel("Alkyne");
-		panel_1_1_1.add(lblNewLabel_3_2_2);
+		ankin.add(lblNewLabel_3_2_2);
 		lblNewLabel_3_2_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_1 = new JPanel();
-		panel_1_1_1_1.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_1.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_1.setBounds(279, 490, 201, 30);
-		panel.add(panel_1_1_1_1);
+		  hc = new JPanel();
+		hc.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		hc.setBackground(new Color(254, 215, 180));
+		hc.setBounds(279, 490, 201, 30);
+		panel.add(hc);
 		
-		JLabel lblNewLabel_3_1_2_1 = new JLabel("Aromatic hydrocarbon");
-		panel_1_1_1_1.add(lblNewLabel_3_1_2_1);
-		lblNewLabel_3_1_2_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		JLabel lbhc = new JLabel("Aromatic hydrocarbon");
+		hc.add(lbhc);
+		lbhc.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_2 = new JPanel();
-		panel_1_1_1_2.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_2.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_2.setBounds(279, 531, 201, 30);
-		panel.add(panel_1_1_1_2);
+		 halogen = new JPanel();
+		halogen.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		halogen.setBackground(new Color(254, 215, 180));
+		halogen.setBounds(279, 531, 201, 30);
+		panel.add(halogen);
 		
 		JLabel lblNewLabel_3_2_2_1 = new JLabel("Halogen derivatives");
-		panel_1_1_1_2.add(lblNewLabel_3_2_2_1);
+		halogen.add(lblNewLabel_3_2_2_1);
 		lblNewLabel_3_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_3 = new JPanel();
-		panel_1_1_1_3.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_3.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_3.setBounds(490, 367, 201, 30);
-		panel.add(panel_1_1_1_3);
+		  ancol = new JPanel();
+		ancol.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		ancol.setBackground(new Color(254, 215, 180));
+		ancol.setBounds(490, 367, 201, 30);
+		panel.add(ancol);
 		
 		JLabel lblNewLabel_3_1_1_1_2 = new JLabel("Alcohol");
-		panel_1_1_1_3.add(lblNewLabel_3_1_1_1_2);
+		ancol.add(lblNewLabel_3_1_1_1_2);
 		lblNewLabel_3_1_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_4 = new JPanel();
-		panel_1_1_1_4.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_4.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_4.setBounds(490, 408, 201, 30);
-		panel.add(panel_1_1_1_4);
+		  phenol = new JPanel();
+		phenol.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		phenol.setBackground(new Color(254, 215, 180));
+		phenol.setBounds(490, 408, 201, 30);
+		panel.add(phenol);
 		
 		JLabel lblNewLabel_3_1_1_1 = new JLabel("Phenol");
-		panel_1_1_1_4.add(lblNewLabel_3_1_1_1);
+		phenol.add(lblNewLabel_3_1_1_1);
 		lblNewLabel_3_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_5 = new JPanel();
-		panel_1_1_1_5.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_5.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_5.setBounds(490, 449, 201, 30);
-		panel.add(panel_1_1_1_5);
+		  andehit = new JPanel();
+		andehit.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		andehit.setBackground(new Color(254, 215, 180));
+		andehit.setBounds(490, 449, 201, 30);
+		panel.add(andehit);
 		
-		JLabel lblNewLabel_3_2_1_1 = new JLabel("Aldehyde");
-		panel_1_1_1_5.add(lblNewLabel_3_2_1_1);
-		lblNewLabel_3_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		JLabel lb = new JLabel("Aldehyde");
+		andehit.add(lb);
+		lb.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_6 = new JPanel();
-		panel_1_1_1_6.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_6.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_6.setBounds(490, 490, 201, 30);
-		panel.add(panel_1_1_1_6);
+		  keton = new JPanel();
+		keton.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		keton.setBackground(new Color(254, 215, 180));
+		keton.setBounds(490, 490, 201, 30);
+		panel.add(keton);
 		
 		JLabel lblNewLabel_3_1_1_1_1 = new JLabel("Ketone");
-		panel_1_1_1_6.add(lblNewLabel_3_1_1_1_1);
+		keton.add(lblNewLabel_3_1_1_1_1);
 		lblNewLabel_3_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_1_1_7 = new JPanel();
-		panel_1_1_1_7.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_1_1_7.setBackground(new Color(254, 215, 180));
-		panel_1_1_1_7.setBounds(490, 531, 201, 30);
-		panel.add(panel_1_1_1_7);
+		 ca = new JPanel();
+		ca.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		ca.setBackground(new Color(254, 215, 180));
+		ca.setBounds(490, 531, 201, 30);
+		panel.add(ca);
 		
 		JLabel lblNewLabel_3_2_1_1_1 = new JLabel("Carboxylic acid");
-		panel_1_1_1_7.add(lblNewLabel_3_2_1_1_1);
+		ca.add(lblNewLabel_3_2_1_1_1);
 		lblNewLabel_3_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_2 = new JPanel();
-		panel_1_2.setBorder(new LineBorder(Color.GRAY));
-		panel_1_2.setForeground(new Color(0, 0, 0));
-		panel_1_2.setBackground(new Color(254, 215, 180));
-		panel_1_2.setBounds(279, 185, 201, 30);
-		panel.add(panel_1_2);
+		  ion = new JPanel();
+		
+		ion.setBorder(new LineBorder(Color.GRAY));
+		ion.setForeground(new Color(0, 0, 0));
+		ion.setBackground(new Color(254, 215, 180));
+		ion.setBounds(279, 185, 201, 30);
+		panel.add(ion);
 		
 		JLabel lblNewLabel_3 = new JLabel("Ion");
-		panel_1_2.add(lblNewLabel_3);
+		ion.add(lblNewLabel_3);
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_2_1 = new JPanel();
-		panel_1_2_1.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_2_1.setForeground(new Color(0, 0, 0));
-		panel_1_2_1.setBackground(new Color(254, 215, 180));
-		panel_1_2_1.setBounds(279, 226, 201, 30);
-		panel.add(panel_1_2_1);
+		  base = new JPanel();
+		base.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		base.setForeground(new Color(0, 0, 0));
+		base.setBackground(new Color(254, 215, 180));
+		base.setBounds(279, 226, 201, 30);
+		panel.add(base);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Base");
-		panel_1_2_1.add(lblNewLabel_3_1);
+		base.add(lblNewLabel_3_1);
 		lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_2_2 = new JPanel();
-		panel_1_2_2.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_2_2.setForeground(new Color(0, 0, 0));
-		panel_1_2_2.setBackground(new Color(254, 215, 180));
-		panel_1_2_2.setBounds(279, 267, 201, 30);
-		panel.add(panel_1_2_2);
+		acid = new JPanel();
+		acid.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		acid.setForeground(new Color(0, 0, 0));
+		acid.setBackground(new Color(254, 215, 180));
+		acid.setBounds(279, 267, 201, 30);
+		panel.add(acid);
 		
 		JLabel lblNewLabel_3_2 = new JLabel("Acid");
-		panel_1_2_2.add(lblNewLabel_3_2);
+		acid.add(lblNewLabel_3_2);
 		lblNewLabel_3_2.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_2_3 = new JPanel();
-		panel_1_2_3.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_2_3.setForeground(new Color(0, 0, 0));
-		panel_1_2_3.setBackground(new Color(254, 215, 180));
-		panel_1_2_3.setBounds(490, 185, 201, 30);
-		panel.add(panel_1_2_3);
+		 salt = new JPanel();
+		salt.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		salt.setForeground(new Color(0, 0, 0));
+		salt.setBackground(new Color(254, 215, 180));
+		salt.setBounds(490, 185, 201, 30);
+		panel.add(salt);
 		
-		JLabel lblNewLabel_3_3 = new JLabel("Mu\u1ED1i - Salt");
-		panel_1_2_3.add(lblNewLabel_3_3);
-		lblNewLabel_3_3.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		JLabel lbsalt = new JLabel("Mu\u1ED1i - Salt");
+		salt.add(lbsalt);
+		lbsalt.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
-		JPanel panel_1_2_4 = new JPanel();
-		panel_1_2_4.setBorder(UIManager.getBorder("DesktopIcon.border"));
-		panel_1_2_4.setForeground(new Color(0, 0, 0));
-		panel_1_2_4.setBackground(new Color(254, 215, 180));
-		panel_1_2_4.setBounds(490, 226, 201, 30);
-		panel.add(panel_1_2_4);
+		 ocid = new JPanel();
+		ocid.setBorder(UIManager.getBorder("DesktopIcon.border"));
+		ocid.setForeground(new Color(0, 0, 0));
+		ocid.setBackground(new Color(254, 215, 180));
+		ocid.setBounds(490, 226, 201, 30);
+		panel.add(ocid);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Ocid");
-		panel_1_2_4.add(lblNewLabel_3_1_1);
+		ocid.add(lblNewLabel_3_1_1);
 		lblNewLabel_3_1_1.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		
 		 donChat = new JPanel();

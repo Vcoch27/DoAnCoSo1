@@ -18,7 +18,7 @@ import java.sql.*;
 
 public class FrameLogin extends JFrame {
 	private JPanel contentPane;
-	private PaneLogin pLogin = new PaneLogin();
+	public PaneLogin pLogin = new PaneLogin();
 	private PaneSignIn pSignIn ;
 	private PaneEnterGmail pEnterGmail = new PaneEnterGmail();
 	private JPanel panelConvert;
@@ -27,7 +27,7 @@ public class FrameLogin extends JFrame {
 	public FrameLogin() throws IOException {
 		setResizable(false);
 		setTitle("Login or Register");
-		setBounds(100, 100, 764, 521);
+		setBounds(500, 200, 764, 521);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

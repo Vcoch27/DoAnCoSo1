@@ -2,6 +2,7 @@ package GUI.ForNotePage.KhungNotePage;
 
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -22,13 +23,16 @@ public class PaneNewNote extends JPanel {
 	private JPanel add;	
 	private JPanel inputName;
 	private JLabel lblNewLabel_2;
+	private final int WIDTH = 465;
+	private final int HEIGHT = 55;
 	/**
+	 * 
 	 * Create the panel.
 	 * @throws IOException 
 	 */
 	public PaneNewNote() throws IOException {
 		setBackground(new Color(0, 0, 0));
-		setBounds(0, 0, 465, 54);
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setLayout(null);
 		
 		inputName = new JPanel();

@@ -22,6 +22,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import GUI.ElementPublic.ElementListNote;
+import GUI.ForNotePage.KhungNotePage.FrameChoiceFileToSave;
 import component.TextField;
 
 import javax.imageio.ImageIO;
@@ -29,6 +31,8 @@ import javax.swing.Icon;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrameAddPost extends JFrame {
 
@@ -38,6 +42,7 @@ public class FrameAddPost extends JFrame {
 	private TextField textField;
 	private JLabel countLabel;
 	private JTextArea textArea;
+	public JPanel panel_1;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -90,6 +95,7 @@ public class FrameAddPost extends JFrame {
 		panel.add(lblNewLabel_1);
 
 		textField = new TextField();
+		textField.setFont(new Font("Monospaced", Font.BOLD, 19));
 		textField.setBounds(526, 0, 534, 47);
 		contentPane.add(textField);
 		textField.setColumns(10);
@@ -99,9 +105,9 @@ public class FrameAddPost extends JFrame {
 		lblNewLabel.setBounds(428, 7, 94, 29);
 		contentPane.add(lblNewLabel);
 
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(243, 243, 243));
-		panel_1.setBounds(339, 475, 597, 57);
+		panel_1.setBounds(339, 471, 465, 55);
 		contentPane.add(panel_1);
 
 		BufferedImage myAttach = ImageIO.read(new File("asset//img//attach.png"));
@@ -111,12 +117,25 @@ public class FrameAddPost extends JFrame {
 		avatar_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				try {
+					FrameChoiceFileToSave fap = new FrameChoiceFileToSave(true,FrameAddPost.this);
+					fap.setVisible(true);
+					fap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		avatar_1.setBounds(946, 480, 45, 45);
 		contentPane.add(avatar_1);
 
 		Button btnNewButton = new Button("Đăng tải");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnNewButton.setForeground(new Color(64, 0, 0));
 		btnNewButton.setFont(new Font("Dialog", Font.BOLD, 14));
 		btnNewButton.setBackground(new Color(174, 236, 249));
@@ -128,12 +147,12 @@ public class FrameAddPost extends JFrame {
 		countLabel.setBounds(9, 492, 176, 29);
 		contentPane.add(countLabel);
 
-		 textArea = new JTextArea();
-	        textArea.setLineWrap(true);
-	        textArea.setWrapStyleWord(true);
-	        textArea.setFont(new Font("Monospaced", Font.PLAIN, 22));
-	        textArea.setText("Dương ơi, bạn đang suy nghĩ gì?");
-	        textArea.setBounds(9, 60, 1079, 406);
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setFont(new Font("Monospaced", Font.PLAIN, 22));
+		textArea.setText("Dương ơi, bạn đang suy nghĩ gì?");
+		textArea.setBounds(9, 60, 1079, 406);
 		contentPane.add(textArea);
 		textArea.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
@@ -184,14 +203,26 @@ public class FrameAddPost extends JFrame {
 //	    return totalHeight / lineHeight;
 //	}
 	private void updateCounts() {
-        String text = textArea.getText();
-        if (text.equals("Dương ơi, bạn đang suy nghĩ gì?")) {
-            countLabel.setText("Characters: " + 0 );
-            return;
-        }
+		String text = textArea.getText();
+		if (text.equals("Dương ơi, bạn đang suy nghĩ gì?")) {
+			countLabel.setText("Characters: " + 0);
+			return;
+		}
 
-        int characterCount = text.length();
+		int characterCount = text.length();
 //        int lineCount = getLineCount(textArea);
-        countLabel.setText("Characters: " + characterCount );
-    }
+		countLabel.setText("Characters: " + characterCount);
+	}
+
+	public void addFileNote(String code) throws IOException {
+//		panel_1.add(new ElementListNote());
+//		System.out.println("done");
+		
+		contentPane.remove(panel_1);
+		panel_1 = new ElementListNote(false);
+		panel_1.setBounds(339, 475, 465, 55);
+		contentPane.add(panel_1);
+		contentPane.revalidate();
+		contentPane.repaint();
+	}
 }

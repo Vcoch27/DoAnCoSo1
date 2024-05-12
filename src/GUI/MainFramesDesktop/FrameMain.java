@@ -14,9 +14,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
 
 import GUI.ForBangTuanHoan.KhungHienThiBangTuanHoan.PanelBangTuanHoan;
+import GUI.ForCommunity.KhungHienThiCommunity.FrameCommunity;
+import GUI.ForHomePage.PaneAccount;
 import GUI.ForHomePage.PaneHomePage;
+import GUI.ForHomePage.PaneLogIn_Out;
 import GUI.ForNotePage.KhungNotePage.FrameNote;
 import GUI.ForTraCuuDanhPhap.KhungHienThiTCDP.PaneTraCuuDanhPhap;
 import component.TextField;
@@ -31,6 +35,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JTextField;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -39,9 +46,14 @@ public class FrameMain extends JFrame {
 	private JPanel contentPane;
 //	private JTextField tf;
 	private Color mauChuDao = new Color(100, 149, 237);
-	private JPanel mainPane;
+	private JPanel mainPane= new JPanel();
 	private PaneHomePage homePane = new PaneHomePage();
 	private PanelBangTuanHoan paneBTH = new PanelBangTuanHoan();
+	private PaneAccount pAcc = new PaneAccount() ;
+	private PaneLogIn_Out pIO = new PaneLogIn_Out();
+	private JPanel panel= new JPanel();
+	private JPanel forAcc= new JPanel();
+	
 //	private PaneTraCuuDanhPhap paneDP = new PaneTraCuuDanhPhap();
 
 	/**
@@ -66,8 +78,9 @@ public class FrameMain extends JFrame {
 	 * @throws IOException
 	 */
 	public FrameMain() throws IOException {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1300, 750);
+		setBounds(200, 100, 1300, 750);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 0, 155));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -75,7 +88,7 @@ public class FrameMain extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(mauChuDao);
 		panel.setBounds(0, 0, 1284, 65);
 		contentPane.add(panel);
@@ -179,6 +192,21 @@ public class FrameMain extends JFrame {
 		Image imgIconCD = myIconCD.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon scalesCD = new ImageIcon(imgIconCD);
 		JLabel lbCongDong = new JLabel(scalesCD);
+		lbCongDong.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				FrameCommunity note;
+				try {
+					note = new FrameCommunity();
+					note.setVisible(true);
+					note.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (IOException | BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			
+			}
+		});
 		lbCongDong.setBounds(235, 0, 65, 65);
 		navBar.add(lbCongDong);
 
@@ -219,15 +247,39 @@ public class FrameMain extends JFrame {
 		lbSearch.setBounds(728, 19, 30, 30);
 		panel.add(lbSearch);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(1045, 0, 239, 65);
-		panel.add(panel_1);
+		forAcc = new JPanel();
+		forAcc.setLayout(null);
+		forAcc.setBounds(1045, 0, 239, 65);
+		
+
+		forAcc.add(pIO);
+		panel.add(forAcc);
+		pIO.fl.pLogin.button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("done");
+				login();
+
+			}
+
+		});
 
 		mainPane = new JPanel();
 		mainPane.setBounds(0, 76, 1285, 635);
 		mainPane.setLayout(null);
 		mainPane.add(homePane);
 		contentPane.add(mainPane);
+	}
+	private void login() {
+		panel.remove(forAcc);
+		forAcc = pAcc;
+		forAcc.setBounds(1045, 0, 239, 65);
+		panel.add(forAcc);
+		System.out.println("done");
+		panel.revalidate();
+		panel.repaint();
+		pIO.fl.setVisible(false);
+		
 	}
 
 }

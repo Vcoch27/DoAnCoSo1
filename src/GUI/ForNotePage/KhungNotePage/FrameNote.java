@@ -113,8 +113,8 @@ public class FrameNote extends JFrame {
 		areaList.setLayout(boxlayout);
 
 		scrollPaneList.setViewportView(areaList);
-		for (int i = 0; i < 3; i++) {
-			ElementListNote el = new ElementListNote();
+		for (int i = 0; i < 10; i++) {
+			ElementListNote el = new ElementListNote(true);
 			el.setMaximumSize(new Dimension(Integer.MAX_VALUE, el.getPreferredSize().height));
 			areaList.add(el);
 			el.lbOpenNote.addMouseListener(new MouseAdapter() {
@@ -136,7 +136,7 @@ public class FrameNote extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (!addCard.enterName.getText().equals("")) {
 					try {
-	                    ElementListNote newNote = new ElementListNote();
+	                    ElementListNote newNote = new ElementListNote(true);
 	                    newNote.setMaximumSize(new Dimension(Integer.MAX_VALUE, newNote.getPreferredSize().height));
 	                    int addCardIndex = areaList.getComponentZOrder(addCard);
 	                    areaList.add(newNote, addCardIndex);

@@ -55,7 +55,7 @@ public class FrameCommunity extends JFrame {
 	 */
 	public FrameCommunity() throws IOException, BadLocationException {
 		setBackground(new Color(255, 255, 255));
-		setBounds(0, 0, 1285, 692);
+		setBounds(250, 150, 1285, 692);
 		getContentPane().setLayout(null);
 		setResizable(false);
 		JPanel paneForMini = new JPanel();

@@ -27,6 +27,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 //new JPanel() {
 //			@Override
@@ -40,7 +42,7 @@ import java.awt.event.FocusListener;
 public class PaneLogin extends JPanel {
 	private TextField tfTK;
 	private PasswordField pwMK;
-	private ButtonGradient button;
+	public ButtonGradient button;
 	private JLabel lbQPass;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
@@ -104,6 +106,8 @@ public class PaneLogin extends JPanel {
 		add(pwMK);
 
 		button = new ButtonGradient();
+		
+		
 		button.setForeground(new Color(0, 0, 0));
 		button.setFont(new Font("Arial", Font.PLAIN, 18));
 		button.setText("buttonGradient1");

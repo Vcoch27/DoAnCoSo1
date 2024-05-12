@@ -10,6 +10,9 @@ import java.net.MalformedURLException;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+
+import GUI.ForNotePage.KhungNotePage.FrameChoiceFileToSave;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -19,6 +22,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
@@ -117,6 +122,19 @@ public class ElementDanhPhap extends JPanel {
 		Image imgAdd = BufferAdd.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 		ImageIcon scalesAdd = new ImageIcon(imgAdd);
 		JLabel lblNewLabel_1 = new JLabel(scalesAdd);
+		lblNewLabel_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					FrameChoiceFileToSave fcfts = new FrameChoiceFileToSave(false,null);
+					fcfts.setVisible(true);
+					fcfts.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		lblNewLabel_1.setBounds(608, 20, 32, 32);
 		add(lblNewLabel_1);
 	}
