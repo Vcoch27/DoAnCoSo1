@@ -17,7 +17,7 @@ import java.awt.event.ActionEvent;
 
 public class PaneLogIn_Out extends JPanel  {
 	public FrameLogin fl =new FrameLogin();
-	
+	public ButtonGradient btnStart;
 	/**
 	 * Create the panel.
 	 */
@@ -26,20 +26,20 @@ public class PaneLogIn_Out extends JPanel  {
 		setBounds(0, 0, 239, 65);
 		setLayout(null);
 		
-		ButtonGradient btnNewButton = new ButtonGradient();
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-					fl.setVisible(true);
-					fl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				
-				
-			}
-		});
-		btnNewButton.setFont(new Font("Monospaced", Font.ITALIC, 14));
-		btnNewButton.setText("\u0110\u0103ng k\u00FD / \u0110\u0103ng Nh\u1EADp");
-		btnNewButton.setBounds(10, 11, 219, 43);
-		add(btnNewButton);
+		btnStart = new ButtonGradient();
+//		btnStart.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				
+//					fl.setVisible(true);
+//					fl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//				
+//				
+//			}
+//		});
+		btnStart.setFont(new Font("Monospaced", Font.ITALIC, 14));
+		btnStart.setText("\u0110\u0103ng k\u00FD / \u0110\u0103ng Nh\u1EADp");
+		btnStart.setBounds(10, 11, 219, 43);
+		add(btnStart);
 //		fl.pLogin.button.addMouseListener(new MouseAdapter() {
 //			@Override
 //			public void mouseClicked(MouseEvent e) {

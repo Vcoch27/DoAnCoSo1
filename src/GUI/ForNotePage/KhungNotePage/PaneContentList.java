@@ -37,7 +37,7 @@ public class PaneContentList extends JPanel {
 		setBounds(0, 0, 770, 596);
 		setLayout(null);
 
-		PanelHienThiListDanhPhap panelListDP = new PanelHienThiListDanhPhap();
+		PanelHienThiListDanhPhap panelListDP = new PanelHienThiListDanhPhap(null);
 		panelListDP.setBounds(50, 296, 670, 300);
 		add(panelListDP);
 
@@ -59,7 +59,7 @@ public class PaneContentList extends JPanel {
 	}
 	public void endo() {
 		if (undoManager.canRedo()) {
-            undoManager.redo(); // Làm lại thao tác đã hoàn tác trước đó
+            undoManager.redo(); 
         }
 	}
 }

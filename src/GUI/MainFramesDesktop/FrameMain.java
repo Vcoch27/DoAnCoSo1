@@ -21,8 +21,10 @@ import GUI.ForCommunity.KhungHienThiCommunity.FrameCommunity;
 import GUI.ForHomePage.PaneAccount;
 import GUI.ForHomePage.PaneHomePage;
 import GUI.ForHomePage.PaneLogIn_Out;
+import GUI.ForLogin.FrameLogin;
 import GUI.ForNotePage.KhungNotePage.FrameNote;
 import GUI.ForTraCuuDanhPhap.KhungHienThiTCDP.PaneTraCuuDanhPhap;
+import Model.User;
 import component.TextField;
 
 //import CongDong.KhungGiaoDienHienThi_;
@@ -46,14 +48,14 @@ public class FrameMain extends JFrame {
 	private JPanel contentPane;
 //	private JTextField tf;
 	private Color mauChuDao = new Color(100, 149, 237);
-	private JPanel mainPane= new JPanel();
+	private JPanel mainPane = new JPanel();
 	private PaneHomePage homePane = new PaneHomePage();
 	private PanelBangTuanHoan paneBTH = new PanelBangTuanHoan();
-	private PaneAccount pAcc = new PaneAccount() ;
+	private PaneAccount pAcc;
 	private PaneLogIn_Out pIO = new PaneLogIn_Out();
-	private JPanel panel= new JPanel();
-	private JPanel forAcc= new JPanel();
-	
+	private JPanel panel = new JPanel();
+	private JPanel forAcc = new JPanel();
+
 //	private PaneTraCuuDanhPhap paneDP = new PaneTraCuuDanhPhap();
 
 	/**
@@ -176,7 +178,7 @@ public class FrameMain extends JFrame {
 							contentPane.add(mainPane);
 							contentPane.revalidate();
 							contentPane.repaint();
-					    }
+						}
 					});
 				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
 					// TODO Auto-generated catch block
@@ -204,7 +206,7 @@ public class FrameMain extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			
+
 			}
 		});
 		lbCongDong.setBounds(235, 0, 65, 65);
@@ -250,15 +252,31 @@ public class FrameMain extends JFrame {
 		forAcc = new JPanel();
 		forAcc.setLayout(null);
 		forAcc.setBounds(1045, 0, 239, 65);
-		
+
+		pIO.btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+//					pIO.fl = new FrameLogin();
+				pIO.fl.setVisible(true);
+				pIO.fl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+			}
+		});
 
 		forAcc.add(pIO);
 		panel.add(forAcc);
-		pIO.fl.pLogin.button.addMouseListener(new MouseAdapter() {
+		pIO.fl.pLogin.btnLogIn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("done");
-				login();
+				User u = pIO.fl.pLogin.login();
+				if (u != null) {
+					try {
+						doneLogin(u);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 
 			}
 
@@ -270,8 +288,10 @@ public class FrameMain extends JFrame {
 		mainPane.add(homePane);
 		contentPane.add(mainPane);
 	}
-	private void login() {
+
+	private void doneLogin(User u) throws IOException {
 		panel.remove(forAcc);
+		pAcc = new PaneAccount(u);
 		forAcc = pAcc;
 		forAcc.setBounds(1045, 0, 239, 65);
 		panel.add(forAcc);
@@ -279,7 +299,7 @@ public class FrameMain extends JFrame {
 		panel.revalidate();
 		panel.repaint();
 		pIO.fl.setVisible(false);
-		
+
 	}
 
 }

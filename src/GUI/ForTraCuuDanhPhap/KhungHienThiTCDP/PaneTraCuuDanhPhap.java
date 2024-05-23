@@ -94,7 +94,7 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
-						chuyen(true, "code");
+						chuyen(true, "ion");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -127,7 +127,7 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
-						chuyen(true, "code");
+						chuyen(true, "oxide");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -138,7 +138,7 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
-						chuyen(true, "code");
+						chuyen(true, "oxide");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -292,7 +292,7 @@ public class PaneTraCuuDanhPhap extends JPanel {
 			 lbBack.setVisible(false);
 			
 		} else {
-			chitiet = new PanelChiTietMucDanhPhap();
+			chitiet = new PanelChiTietMucDanhPhap(code);
 			remove(paneMainTraCuu);
 			paneMainTraCuu = chitiet;
 			paneMainTraCuu.setBounds(0, 54, 1285, 578);

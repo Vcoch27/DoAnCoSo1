@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
+import Controller.ControlDanhPhap.ForNguyenTo;
 import GUI.ForNotePage.KhungNotePage.FrameChoiceFileToSave;
+import Model.ElementDanhPhapHoaHoc;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -47,75 +49,53 @@ public class ElementDanhPhap extends JPanel {
 	 * @throws MalformedURLException
 	 * @throws LineUnavailableException
 	 */
-	public ElementDanhPhap()
+	public ElementDanhPhap(ElementDanhPhapHoaHoc eDP)
 			throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
-		setBounds(0, 0, 650, 70);
+		setBackground(new Color(192, 192, 192));
+		
 
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		setLayout(null);
 
-		File fileAudioUS = new File("asset/audio/hidrouk.wav");
-		AudioInputStream audioIn = AudioSystem.getAudioInputStream(fileAudioUS.toURI().toURL());
-		Clip clip = AudioSystem.getClip();
-		clip.open(audioIn);
+//		File fileAudioUS = new File("asset/audio/hidrouk.wav");
+//		AudioInputStream audioIn = AudioSystem.getAudioInputStream(fileAudioUS.toURI().toURL());
+//		Clip clip = AudioSystem.getClip();
+//		clip.open(audioIn);
 
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBackground(new Color(211, 211, 211));
-		panel_1_1.setBounds(189, 20, 190, 33);
+		panel_1_1.setBounds(190, 5, 190, 33);
 		add(panel_1_1);
 		panel_1_1.setLayout(null);
 		
-		JLabel apiUK = new JLabel("UK  /"+"ˈsɒl.ɪd"+"/");
-		apiUK.setBounds(4, 5, 106, 23);
-		apiUK.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel apiUK = new JLabel("UK  "+eDP.getIpaUK()+"");
+		apiUK.setBounds(4, 5, 186, 23);
+		apiUK.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1_1.add(apiUK);
 		
 		BufferedImage BufferAudioNT = ImageIO.read(new File("asset//img//audio.png"));
 		Image imgAudioNT = BufferAudioNT.getScaledInstance(22, 22, Image.SCALE_SMOOTH);
 		ImageIcon scalesAudioNT = new ImageIcon(imgAudioNT);
-		JLabel soundUK = new JLabel(scalesAudioNT);
-		soundUK.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				clip.stop();
-                clip.setFramePosition(0);
-                clip.start();
-			}
-		});
-		soundUK.setBounds(158, 0, 33, 33);
-		panel_1_1.add(soundUK);
 		
 		JPanel panel_1_1_1 = new JPanel();
 		panel_1_1_1.setLayout(null);
 		panel_1_1_1.setBackground(new Color(211, 211, 211));
-		panel_1_1_1.setBounds(408, 20, 190, 33);
+		panel_1_1_1.setBounds(405, 7, 190, 33);
 		add(panel_1_1_1);
 		
-		JLabel apiUS = new JLabel("UK  /ˈsɒl.ɪd/");
-		apiUS.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		apiUS.setBounds(4, 5, 106, 23);
+		JLabel apiUS = new JLabel("UK  "+eDP.getIpaUS());
+		apiUS.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		apiUS.setBounds(4, 5, 186, 23);
 		panel_1_1_1.add(apiUS);
-		
-		JLabel soundUS = new JLabel(scalesAudioNT);
-		soundUS.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				clip.stop();
-                clip.setFramePosition(0);
-                clip.start();
-			}
-		});
-		soundUS.setBounds(158, 0, 33, 33);
-		panel_1_1_1.add(soundUS);
 		
 		JLabel lblNewLabel = new JLabel("<html>\r\n"
 				+ "<body style=\"margin: 0; padding: 0;\">\r\n"
-				+ "    <p 0>Rutherford</p>\r\n"
-				+ "    <h2 >Rutherfordium - Rf</h2>\r\n"
+				+ "    <p 0>"+eDP.getDanhPhapCu()+"</p>\r\n"
+				+ "    <h3 >"+eDP.getIdDanhPhap()+" - "+eDP.getKiHieu()+"</h3>\r\n"
 				+ "</body>\r\n"
 				+ "</html>");
-		lblNewLabel.setBounds(10, 5, 169, 59);
+		lblNewLabel.setBounds(10, 0, 169, 70);
 		add(lblNewLabel);
 		
 		BufferedImage BufferAdd = ImageIO.read(new File("asset//img//add.png"));
@@ -135,7 +115,26 @@ public class ElementDanhPhap extends JPanel {
 				}
 			}
 		});
-		lblNewLabel_1.setBounds(608, 20, 32, 32);
+		lblNewLabel_1.setBounds(611, 18, 32, 32);
 		add(lblNewLabel_1);
+		JLabel soundUK = new JLabel(scalesAudioNT);
+		soundUK.setBounds(347, 35, 33, 33);
+		add(soundUK);
+		
+		JLabel soundUS = new JLabel(scalesAudioNT);
+		soundUS.setBounds(569, 36, 33, 33);
+		add(soundUS);
+		soundUS.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ForNguyenTo.playAudio(eDP.getAudioUS());
+			}
+		});
+		soundUK.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ForNguyenTo.playAudio(eDP.getAudioUK());
+			}
+		});
 	}
 }

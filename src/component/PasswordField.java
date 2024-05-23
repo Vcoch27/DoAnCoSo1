@@ -8,15 +8,16 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicPasswordFieldUI;
 
-//import PasswordField.TextUI;
-
-
 public class PasswordField extends JPasswordField {
+
+    private int round = 10;
+    private Color shadowColor = new Color(0, 0, 0);
+    private BufferedImage imageShadow;
+    private final Insets shadowSize = new Insets(2, 5, 8, 5);
 
     public int getRound() {
         return round;
@@ -38,11 +39,6 @@ public class PasswordField extends JPasswordField {
         repaint();
     }
 
-    private int round = 10;
-    private Color shadowColor = new Color(0, 0, 0);
-    private BufferedImage imageShadow;
-    private final Insets shadowSize = new Insets(2, 5, 8, 5);
-
     public PasswordField() {
         setUI(new TextUI());
         setOpaque(false);
@@ -61,9 +57,7 @@ public class PasswordField extends JPasswordField {
         double height = getHeight() - (shadowSize.top + shadowSize.bottom);
         double x = shadowSize.left;
         double y = shadowSize.top;
-        //  Create Shadow Image
         g2.drawImage(imageShadow, 0, 0, null);
-        //  Create Background Color
         g2.setColor(getBackground());
         Area area = new Area(new RoundRectangle2D.Double(x, y, width, height, round, round));
         g2.fill(area);
@@ -107,11 +101,8 @@ public class PasswordField extends JPasswordField {
     }
 
     private class TextUI extends BasicPasswordFieldUI {
-
-        //  Override this method to remove background or not paint background
         @Override
         protected void paintBackground(Graphics grphcs) {
-
         }
     }
 }

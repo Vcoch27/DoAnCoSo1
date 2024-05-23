@@ -1,84 +1,132 @@
 package GUI.ForTraCuuDanhPhap.MucDanhPhapHienThi;
 
-import javax.swing.JPanel;
-
-import GUI.ElementPublic.PanelHienThiListDanhPhap;
-
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
-import javax.swing.JEditorPane;
+import javax.swing.*;
+
+import Controller.ControlDanhPhap.ControllerMucDanhPhap;
+import GUI.ElementPublic.PanelHienThiListDanhPhap;
+import Model.ElementMucDanhPhap;
+import component.ButtonGradient;
+import component.ImageAvatar;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class PanelChiTietMucDanhPhap extends JPanel {
+	public ButtonGradient btnStart;
+	private JLabel ia;
+    /**
+     * Create the panel.
+     * @throws LineUnavailableException 
+     * @throws IOException 
+     * @throws UnsupportedAudioFileException 
+     * @throws MalformedURLException 
+     */
+    public PanelChiTietMucDanhPhap(String id) throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+    	ElementMucDanhPhap eMDP = ControllerMucDanhPhap.getMucDanhPhap(id);
+//    	eDM = eMDP;
+    	setBounds(0, 0, 1285, 588);
+        setLayout(null);
 
-	/**
-	 * Create the panel.
-	 * 
-	 * @throws LineUnavailableException
-	 * @throws IOException
-	 * @throws UnsupportedAudioFileException
-	 * @throws MalformedURLException
-	 */
-	public PanelChiTietMucDanhPhap()
-			throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
-		setBounds(0, 0, 1285, 588);
-		setLayout(null);
+        // Hình minh họa
+//        ImageIcon scalesIMGMucDP = new ImageIcon("asset/img/ion2.jpg");
+//        Image imgIMGMucDP = scalesIMGMucDP.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+//        scalesIMGMucDP = new ImageIcon(imgIMGMucDP);
+//        JLabel imgMinhHoa = new JLabel(scalesIMGMucDP);
+//        imgMinhHoa.setBounds(22, 40, 228, 224);
+//        add(imgMinhHoa);
 
-		BufferedImage BufferIMGMucDP = ImageIO.read(new File("asset/img/ion2.jpg"));
-		Image imgIMGMucDP = BufferIMGMucDP.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-		ImageIcon scalesIMGMucDP = new ImageIcon(imgIMGMucDP);
-		JLabel imgMinhHoa = new JLabel(scalesIMGMucDP);
-		imgMinhHoa.setBounds(80, 11, 250, 250);
-		add(imgMinhHoa);
+        // Panel chứa JEditorPane
+        JPanel panel = new JPanel();
+        panel.setBounds(274, 0, 1001, 272);
+        add(panel);
+        panel.setLayout(new BorderLayout());
 
-		JPanel panel = new JPanel();
-		panel.setBounds(388, 11, 834, 237);
-		add(panel);
-		panel.setLayout(null);
+        JScrollPane scrollPane = new JScrollPane();
+        panel.add(scrollPane, BorderLayout.CENTER);
 
-		JLabel lblNewLabel = new JLabel("T\u00EAn m\u1EE5c danh ph\u00E1p");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblNewLabel.setBounds(342, 0, 187, 27);
-		panel.add(lblNewLabel);
+        JEditorPane editorPane = new JEditorPane();
+        editorPane.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        scrollPane.setViewportView(editorPane);
+        editorPane.setContentType("text/html");
+        editorPane.setText(eMDP.getMota());
+        editorPane.setEditable(false);
 
-		JEditorPane editorPane = new JEditorPane();
-		editorPane.setBounds(23, 28, 788, 198);
-		editorPane.setContentType("text/html");
-		editorPane.setText("<html><body><h1>About muc noi dung</h1><p>Kieen thuc danh phap</p></body></html>");
-		editorPane.setEditable(false);
-		panel.add(editorPane);
+        // Button để mở trình duyệt với đường dẫn được chỉ định
+        
+        btnStart = new ButtonGradient();
+        btnStart.setFont(new Font("Tahoma", Font.BOLD, 16));
+        btnStart.setText("Luyện tập bằng flashcard");
+        btnStart.setBounds(10, 278, 252, 46);
+        add(btnStart);
+        
+        JLabel lblNewLabel = new JLabel(eMDP.getIdMucDanhPhap().toUpperCase());
+        lblNewLabel.setFont(new Font("Monospaced", Font.BOLD, 20));
+        lblNewLabel.setBounds(22, 11, 228, 26);
+        add(lblNewLabel);
 
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(605, 277, 670, 300);
+        JPanel panel_1 = new JPanel();
+		panel_1.setBounds(300, 277, 673, 300);
 		panel_1.setLayout(null);
-		PanelHienThiListDanhPhap listdp = new PanelHienThiListDanhPhap();
+		PanelHienThiListDanhPhap listdp = new PanelHienThiListDanhPhap(ControllerMucDanhPhap.getListDanhPhap(id));
 		listdp.setBounds(0, 0, 670, 300);
 		panel_1.add(listdp);
 		add(panel_1);
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(eMDP.getImg());
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 277, 567, 300);
-		add(panel_2);
-		panel_2.setLayout(null);
-
-		JEditorPane kienThuc = new JEditorPane();
-		kienThuc.setEditable(false);  
-		kienThuc.setBounds(0, 0, 567, 300);
-		panel_2.add(kienThuc);
 		try {
-			kienThuc.setPage("https://chat.openai.com/c/ee925a40-fb42-47ff-9606-7ec276cc4b90");
+			BufferedImage bufferedImage = ImageIO.read(bais);
+			Image imgMinhHoa = bufferedImage.getScaledInstance(228, 224, Image.SCALE_SMOOTH); 
+			ImageIcon icon = new ImageIcon(imgMinhHoa);
+			ia = new JLabel(icon);
+			ia.setBounds(22, 40, 228, 224);
+			add(ia);
 		} catch (IOException e) {
-			kienThuc.setContentType("text/html");
-			kienThuc.setText("<html>Could not load</html>");
+			e.printStackTrace();
 		}
-	}
+        
+        btnStart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    openURL(eMDP.getLink());
+                } catch (URISyntaxException | IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+    }
+    
+    // Phương thức để mở URL trong trình duyệt mặc định
+    private void openURL(String url) throws IOException, URISyntaxException {
+        Desktop.getDesktop().browse(new URI(url));
+    }
+
+    // Phương thức main để chạy thử
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> {
+//            JFrame frame = new JFrame("Test PanelChiTietMucDanhPhap");
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.setSize(1285, 788);
+//
+//            PanelChiTietMucDanhPhap panel;
+//			try {
+//				panel = new PanelChiTietMucDanhPhap(""); frame.getContentPane().add(panel);
+//
+//            frame.setVisible(true);
+//			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//           
+//        });
+//    }
 }

@@ -2,6 +2,9 @@ package GUI.ForLogin;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import Model.User;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
@@ -37,7 +40,7 @@ import java.awt.event.ActionListener;
 //		};
 public class PaneEnterGmail extends JPanel {
 	private TextField tfMail;
-	public ButtonGradient button;
+	public ButtonGradient btnEnterGmail;
 	private JLabel bg;
 	private JLabel lblNewLabel_5;
 	private JLabel lblBnChaC;
@@ -99,20 +102,24 @@ public class PaneEnterGmail extends JPanel {
 			}
 		});
 
-		button = new ButtonGradient();
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
+		btnEnterGmail = new ButtonGradient();
+		btnEnterGmail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button.setForeground(new Color(0, 0, 0));
-		button.setFont(new Font("Arial", Font.PLAIN, 18));
-		button.setText("buttonGradient1");
-		button.setText("Tiếp tục");
-//		Button btnNewButton = new Button();
-		button.setBounds(184, 393, 143, 43);
-		add(button);
+		btnEnterGmail.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+			}
+		});
+		btnEnterGmail.setForeground(new Color(0, 0, 0));
+		btnEnterGmail.setFont(new Font("Arial", Font.PLAIN, 18));
+		btnEnterGmail.setText("buttonGradient1");
+		btnEnterGmail.setText("Tiếp tục");
+//		Button btnStart = new Button();
+		btnEnterGmail.setBounds(184, 393, 143, 43);
+		add(btnEnterGmail);
 
 		BufferedImage myIconAcc = ImageIO.read(new File("asset//img//account.png"));
 		Image imgIconAcc = myIconAcc.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
@@ -138,10 +145,10 @@ public class PaneEnterGmail extends JPanel {
 		lbToLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbToLogIn.setBounds(286, 447, 111, 23);
 		add(lbToLogIn);
-
-		BufferedImage myIconBack = ImageIO.read(new File("asset//img//back.png"));
-		Image imgIconBack = myIconBack.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-		ImageIcon scalesBack = new ImageIcon(imgIconBack);
+//
+//		BufferedImage myIconBack = ImageIO.read(new File("asset//img//back.png"));
+//		Image imgIconBack = myIconBack.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+//		ImageIcon scalesBack = new ImageIcon(imgIconBack);
 
 		lblngKVi = new JLabel("Nhập gmail đăng ký:");
 		lblngKVi.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -152,7 +159,7 @@ public class PaneEnterGmail extends JPanel {
 		Image imgbg = mybg.getScaledInstance(543, 482, Image.SCALE_SMOOTH);
 		ImageIcon scales = new ImageIcon(imgbg);
 
-		 lbErr = new JLabel("");
+		lbErr = new JLabel("");
 		lbErr.setBounds(109, 281, 301, 14);
 		add(lbErr);
 		setBg(scales);
@@ -163,31 +170,28 @@ public class PaneEnterGmail extends JPanel {
 		bg.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		bg.setBounds(0, 0, 543, 482);
 		add(bg);
-		
-
 	}
-	
+
 	public String tiepTuc() {
 		String gmail = tfMail.getText().trim();
-		if(gmail.equals("")) {
+		System.out.println(gmail);
+		if (gmail.equals("") || gmail.equals("nhập mail")) {
 			lbErr.setText("Hãy nhập gmail");
 			return "err";
-		}else if(!isGmailAddress(gmail)) {
+		} else if (!isGmailAddress(gmail)) {
 			lbErr.setText("Gmail không hợp lệ");
 			return "err";
-		}else {
+		} else {
 			return gmail;
 		}
 	}
-	public  boolean isGmailAddress(String email) {
-        String regex = "\\b[A-Za-z0-9._%+-]+@gmail\\.com\\b";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        
-        // Kiểm tra nếu chuỗi khớp với biểu thức chính quy
-        return matcher.matches();
-    }
-	
+
+	public boolean isGmailAddress(String email) {
+		String regex = "^[A-Za-z0-9._%+-]+@((([A-Za-z0-9-]+\\.)*gmail\\.[A-Za-z]{2,})|(vku\\.udn\\.vn))$";
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(email);
+		return matcher.matches();
+	}
 
 	class HoverListener implements MouseListener {
 		private JLabel label;
@@ -211,7 +215,7 @@ public class PaneEnterGmail extends JPanel {
 		// Các phương thức còn lại không cần thiết, ta có thể để trống
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
+
 		}
 
 		@Override

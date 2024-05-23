@@ -10,8 +10,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import DoiTuong.ForGUI.ONguyenTo;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
@@ -27,11 +25,30 @@ public class PanelBangTuanHoan extends JPanel {
 	private final int ROWS = 7;
 	private final int COLS = 18;
 	private FrameHienThiChiTietNguyenTo chiTietNT;
-	
+	private String[] danhPhap = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen",
+			"Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine",
+			"Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron",
+			"Cobalt", "Nickel", "Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine", "Krypton",
+			"Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium", "Molybdenum", "Technetium", "Ruthenium",
+			"Rhodium", "Palladium", "Silver", "Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon",
+			"Cesium", "Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium", "Samarium",
+			"Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium", "Erbium", "Thulium", "Ytterbium", "Lutetium",
+			"Hafnium", "Tantalum", "Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury",
+			"Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium", "Radium", "Actinium", "Thorium",
+			"Protactinium", "Uranium", "Neptunium", "Plutonium", "Americium", "Curium", "Berkelium", "Californium",
+			"Einsteinium", "Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium", "Seaborgium",
+			"Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium", "Copernicium", "Nihonium", "Flerovium",
+			"Moscovium", "Livermorium", "Tennessine", "Oganesson" };
+	String[] kiHieu = { "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl",
+			"Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br",
+			"Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I",
+			"Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
+			"Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
+			"Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh",
+			"Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og" };
 	int soHieuNT = 1;
 	String bg;
 	Color bgPanel;
-	
 
 	public PanelBangTuanHoan() throws IOException {
 		setBounds(0, 0, 1285, 635);
@@ -217,11 +234,10 @@ public class PanelBangTuanHoan extends JPanel {
 						bgPanel = new Color(60, 179, 113);
 
 					}
-					content.setText(
-							"<html><body> <p style=\"font-size: 10px;line-height: 10px; margin: 0;padding: 0;\">"
-									+ soHieuNT
-									+ "</p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\"><b>H</b></p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\">Hidro</p>\r\n"
-									+ "</body></html>");
+					content.setText("<html><body> <p style=\"font-size: 10px;line-height: 10px; margin: 0;padding: 0;\">"
+							+ soHieuNT
+							+ "</p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\"><btnDK>"+kiHieu[soHieuNT-1]+"</btnDK></p><p style=\"font-size: 8.8px;line-height: 10px;margin: 0;padding: 0;\">"+danhPhap[soHieuNT-1]+"</p>\r\n"
+							+ "</body></body></html>");
 					oNT.setBackground(bgPanel);
 					content.setBackground(bgPanel);
 					oNT.putClientProperty("soHieu", soHieuNT);
@@ -242,7 +258,6 @@ public class PanelBangTuanHoan extends JPanel {
 							chiTietNT.setVisible(true);
 							chiTietNT.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-
 						} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -261,7 +276,7 @@ public class PanelBangTuanHoan extends JPanel {
 				content.setContentType("text/html");
 				content.setText("<html><body> <p style=\"font-size: 10px;line-height: 10px; margin: 0;padding: 0;\">"
 						+ soHieuNT
-						+ "</p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\"><b>H</b></p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\">Hidro</p>\r\n"
+						+ "</p><p style=\"font-size: 10px;line-height: 10px;margin: 0;padding: 0;\"><btnDK>"+kiHieu[soHieuNT-1]+"</btnDK></p><p style=\"font-size:8.8px;line-height: 10px;margin: 0;padding: 0;\">"+danhPhap[soHieuNT-1]+"</p>\r\n"
 						+ "</body></body></html>");
 				content.setBackground(bgPanel);
 				oNT.setBackground(bgPanel);
@@ -283,7 +298,6 @@ public class PanelBangTuanHoan extends JPanel {
 							chiTietNT = new FrameHienThiChiTietNguyenTo(soHieu);
 							chiTietNT.setVisible(true);
 							chiTietNT.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 
 						} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
 							// TODO Auto-generated catch block

@@ -12,13 +12,18 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JTextField;
 
+import Controller.ControlUser.LoginUser;
+import Model.User;
 import component.ButtonGradient;
+import component.Notifications;
 import component.PasswordField;
 import component.TextField;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -40,9 +45,9 @@ import java.awt.event.ActionEvent;
 //			}
 //		};
 public class PaneLogin extends JPanel {
-	private TextField tfTK;
+	public TextField tfTK;
 	private PasswordField pwMK;
-	public ButtonGradient button;
+	public ButtonGradient btnLogIn;
 	private JLabel lbQPass;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
@@ -50,14 +55,14 @@ public class PaneLogin extends JPanel {
 	private JLabel lblNewLabel_5;
 	private JLabel lblBnChaC;
 	public JLabel lbCreate;
-
+	private JFrame frame;
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws IOException
 	 */
-	public PaneLogin() throws IOException {
-
+	public PaneLogin(JFrame f) throws IOException {
+		this.frame = f;
 		setForeground(new Color(255, 255, 255));
 		setBackground(new Color(192, 192, 192));
 		setBounds(0, 0, 543, 482);
@@ -105,16 +110,15 @@ public class PaneLogin extends JPanel {
 		pwMK.setBounds(106, 229, 328, 49);
 		add(pwMK);
 
-		button = new ButtonGradient();
-		
-		
-		button.setForeground(new Color(0, 0, 0));
-		button.setFont(new Font("Arial", Font.PLAIN, 18));
-		button.setText("buttonGradient1");
-		button.setText("Đăng nhập");
-//		Button btnNewButton = new Button();
-		button.setBounds(200, 327, 143, 43);
-		add(button);
+		btnLogIn = new ButtonGradient();
+
+		btnLogIn.setForeground(new Color(0, 0, 0));
+		btnLogIn.setFont(new Font("Arial", Font.PLAIN, 18));
+		btnLogIn.setText("buttonGradient1");
+		btnLogIn.setText("Đăng nhập");
+//		Button btnStart = new Button();
+		btnLogIn.setBounds(200, 327, 143, 43);
+		add(btnLogIn);
 
 		BufferedImage mynoeye = ImageIO.read(new File("asset//img//noseePW.png"));
 		Image imgnoeye = mynoeye.getScaledInstance(26, 26, Image.SCALE_SMOOTH);
@@ -201,14 +205,14 @@ public class PaneLogin extends JPanel {
 		lblBnChaC.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblBnChaC.setBounds(117, 392, 153, 23);
 		add(lblBnChaC);
-		
+
 		lbCreate = new JLabel("Tạo tài khoản");
 		lbCreate.addMouseListener(new HoverListener(lbCreate));
 		lbCreate.setForeground(new Color(0, 106, 106));
 		lbCreate.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbCreate.setBounds(287, 393, 111, 23);
 		add(lbCreate);
-		
+
 		BufferedImage mybg = ImageIO.read(new File("asset//bg//bglogin2.png"));
 		Image imgbg = mybg.getScaledInstance(543, 482, Image.SCALE_SMOOTH);
 		ImageIcon scales = new ImageIcon(imgbg);
@@ -216,42 +220,69 @@ public class PaneLogin extends JPanel {
 		bg.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		bg.setBounds(0, 0, 543, 482);
 		add(bg, BorderLayout.SOUTH);
-		
-		
-
-		
 
 	}
 
-	
-	
 	class HoverListener implements MouseListener {
-	    private JLabel label;
-	    private String originalText;
+		private JLabel label;
+		private String originalText;
 
-	    public HoverListener(JLabel label) {
-	        this.label = label;
-	        this.originalText = label.getText();
-	    }
+		public HoverListener(JLabel label) {
+			this.label = label;
+			this.originalText = label.getText();
+		}
 
-	    @Override
-	    public void mouseEntered(MouseEvent e) {
-	        label.setText("<html><u>" + originalText + "</u></html>");
-	    }
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			label.setText("<html><u>" + originalText + "</u></html>");
+		}
 
-	    @Override
-	    public void mouseExited(MouseEvent e) {
-	        label.setText(originalText);
-	    }
+		@Override
+		public void mouseExited(MouseEvent e) {
+			label.setText(originalText);
+		}
 
-	    // Các phương thức còn lại không cần thiết, ta có thể để trống
-	    @Override
-	    public void mouseClicked(MouseEvent e) {}
+		// Các phương thức còn lại không cần thiết, ta có thể để trống
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
 
-	    @Override
-	    public void mousePressed(MouseEvent e) {}
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
 
-	    @Override
-	    public void mouseReleased(MouseEvent e) {}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+	}
+
+	public User login() {
+		String username = tfTK.getText();
+		char[] pw = pwMK.getPassword();
+		System.out.println(new String(pw));
+		if (username.isEmpty() || username.equals("tên tài khoản") || pw.toString().isEmpty()
+				|| pw.toString().equals("mật khẩu")) {
+			showNotification(Notifications.Type.WARNING, "Hãy nhập đầy đủ thông tin");
+			return null;
+		}else {
+			try {
+				User u = LoginUser.login(username, new String(pw));
+				if(u!=null) {
+					showNotification(Notifications.Type.SUCCESS, "Đăng nhập thành công");
+					return u;
+					
+				}else {
+					showNotification(Notifications.Type.WARNING, "Tên tài khoản hoặc mật khẩu không chính xác");
+				}
+			} catch (Exception e) {
+				showNotification(Notifications.Type.WARNING, "Đăng nhập không thành công");
+			}
+		}
+		
+		return null;
+	}
+	private void showNotification(Notifications.Type type, String message) {
+	    Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
+	    panel.showNotification();
 	}
 }
