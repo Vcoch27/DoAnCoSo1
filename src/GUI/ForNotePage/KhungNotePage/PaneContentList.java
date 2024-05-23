@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+
 import javax.swing.border.BevelBorder;
 import javax.swing.border.MatteBorder;
 import javax.swing.undo.UndoManager;
@@ -37,9 +39,9 @@ public class PaneContentList extends JPanel {
 		setBounds(0, 0, 770, 596);
 		setLayout(null);
 
-		PanelHienThiListDanhPhap panelListDP = new PanelHienThiListDanhPhap(null);
-		panelListDP.setBounds(50, 296, 670, 300);
-		add(panelListDP);
+//		PanelHienThiListDanhPhap panelListDP = new PanelHienThiListDanhPhap(null);
+//		panelListDP.setBounds(50, 296, 670, 300);
+//		add(panelListDP);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 11, 750, 263);
