@@ -3,6 +3,7 @@ package GUI.ForLogin;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import Client.MainClient.MainClient;
 import Controller.ControlUser.RegisterUser;
 import Model.User;
 
@@ -45,7 +46,7 @@ public class PaneSignIn extends JPanel {
 	private PasswordField pwMK;
 	private PasswordField pwMKAgain;
 	public ButtonGradient btnDK;
-	private JLabel reSentCode;
+	public JLabel reSentCode;
 	private JLabel lblNewLabel_3;
 	private JLabel lblNewLabel_4;
 	private JLabel bg;
@@ -59,18 +60,20 @@ public class PaneSignIn extends JPanel {
 	private JLabel lbCountDown;
 	public JLabel lbBack;
 	private String to;
-	private String maXacNhan;
+	public String maXacNhan;
 	private JFrame frame;
 	private TextField tfUserName;
 	public String userName="";
 	public String salt;
+	public MainClient client;
 
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws IOException
 	 */
-	public PaneSignIn(String gmail, String maXacNhan, JFrame frame, String salt) throws IOException {
+	public PaneSignIn(String gmail, String maXacNhan, JFrame frame, String salt , MainClient client) throws IOException {
+		this.client = client;
 		this.salt =salt;
 		this.maXacNhan = maXacNhan;
 		System.out.println(maXacNhan);
@@ -453,18 +456,22 @@ public class PaneSignIn extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (refreshVeri()) {
-
-				reSentCode.setVisible(false);
-				lbCountDown.setVisible(true);
-				countDown();
-				Notifications panel = new Notifications(frame, Notifications.Type.INFO,
-						Notifications.Location.BOTTOM_CENTER, "Gửi lại mã thành công");
-				panel.showNotification();
-			} else {
-				Notifications panel = new Notifications(frame, Notifications.Type.WARNING,
-						Notifications.Location.BOTTOM_CENTER, "Gửi lại mã không thành công");
-				panel.showNotification();
+			try {
+				if (refreshVeri(client)) {
+					reSentCode.setVisible(false);
+					lbCountDown.setVisible(true);
+					countDown();
+					Notifications panel = new Notifications(frame, Notifications.Type.INFO,
+							Notifications.Location.BOTTOM_CENTER, "Gửi lại mã thành công");
+					panel.showNotification();
+				} else {
+					Notifications panel = new Notifications(frame, Notifications.Type.WARNING,
+							Notifications.Location.BOTTOM_CENTER, "Gửi lại mã không thành công");
+					panel.showNotification();
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 
 		}
@@ -478,18 +485,22 @@ public class PaneSignIn extends JPanel {
 		}
 	}
 
-	private boolean refreshVeri() {
-		String newVeri = RegisterUser.sentVari(to);
-		if (!newVeri.equals("")) {
-			maXacNhan = newVeri;
-			System.out.println(maXacNhan);
+	private boolean refreshVeri(MainClient client) throws IOException {
+		client.dataOutput.writeUTF("ACCOUNT");
+		client.dataOutput.writeUTF("REGISTERMail");
+		client.dataOutput.writeUTF(to);
+		String s = client.dataInput.readUTF();
+		if(!s.equals("OUT")) {
+			String veri = client.dataInput.readUTF();
+			maXacNhan = veri;
 			return true;
 		}
 		return false;
+
 	}
 
 	public User register() throws NoSuchAlgorithmException, InvalidKeySpecException {
-	    // Lấy thông tin từ các trường nhập liệu
+	    
 	    String userName = tfUserName.getText() ;
 	    String fullName = tfTK.getText() ;
 	    String mxn = tfCode.getText() ;
@@ -514,7 +525,6 @@ public class PaneSignIn extends JPanel {
 
 	    // Kiểm tra độ mạnh của mật khẩu
 	    if (!isStrongPassword(password)) {
-	    	
 	        showNotification(Notifications.Type.WARNING, "Mật khẩu không đủ mạnh ");
 	        Timer timer = new Timer(2000, new ActionListener() {
 	            @Override
@@ -534,19 +544,19 @@ public class PaneSignIn extends JPanel {
 
 	    // Tạo một đối tượng User mới
 	    User u = new User(userName, tfMail.getText(), hashedPassword, fullName);
-
+	    return u;
 	    // Thêm người dùng vào cơ sở dữ liệu
-	    if (RegisterUser.addUser(u)) {
-	        showNotification(Notifications.Type.SUCCESS, "Tạo tài khoản thành công");
-	        clearFields();
-	        return u;
-	    } else {
-	        showNotification(Notifications.Type.WARNING, "Tên tài khoản đã tồn tại");
-	        return null;
-	    }
+//	    if (RegisterUser.addUser(u)) {
+//	        showNotification(Notifications.Type.SUCCESS, "Tạo tài khoản thành công");
+//	        clearFields();
+//	        return u;
+//	    } else {
+//	        showNotification(Notifications.Type.WARNING, "Tên tài khoản đã tồn tại");
+//	        return null;
+//	    }
 	}
 
-	private void showNotification(Notifications.Type type, String message) {
+	public void showNotification(Notifications.Type type, String message) {
 	    Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
 	    panel.showNotification();
 	}

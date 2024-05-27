@@ -1,6 +1,8 @@
 package Model;
 
-public class ElementNguyenTo {
+import java.io.Serializable;
+
+public class ElementNguyenTo  implements Serializable{
 	private int soHieuNT;
 	private String dang;
 	private double nguyenTuKhoi;

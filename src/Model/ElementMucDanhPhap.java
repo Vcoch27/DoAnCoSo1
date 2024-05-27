@@ -1,6 +1,8 @@
 package Model;
 
-public class ElementMucDanhPhap {
+import java.io.Serializable;
+
+public class ElementMucDanhPhap implements Serializable {
 	private String idMucDanhPhap;
 	private String mota;
 	private String link;

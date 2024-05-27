@@ -12,49 +12,46 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.BadLocationException;
 
+import Client.MainClient.MainClient;
 import GUI.ForBangTuanHoan.KhungHienThiBangTuanHoan.PanelBangTuanHoan;
 import GUI.ForCommunity.KhungHienThiCommunity.FrameCommunity;
 import GUI.ForHomePage.PaneAccount;
 import GUI.ForHomePage.PaneHomePage;
 import GUI.ForHomePage.PaneLogIn_Out;
-import GUI.ForLogin.FrameLogin;
 import GUI.ForNotePage.KhungNotePage.FrameNote;
 import GUI.ForTraCuuDanhPhap.KhungHienThiTCDP.PaneTraCuuDanhPhap;
+import Model.PairModel;
 import Model.User;
+import component.Notifications;
 import component.TextField;
-
-//import CongDong.KhungGiaoDienHienThi_;
+import component.Notifications.Location;
 
 import java.awt.Color;
-import java.awt.Component;
-
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import javax.swing.JTextField;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
 public class FrameMain extends JFrame {
-
+	private User user = null;
 	private JPanel contentPane;
-//	private JTextField tf;
 	private Color mauChuDao = new Color(100, 149, 237);
 	private JPanel mainPane = new JPanel();
 	private PaneHomePage homePane = new PaneHomePage();
-	private PanelBangTuanHoan paneBTH = new PanelBangTuanHoan();
+	private PanelBangTuanHoan paneBTH = null;
 	private PaneAccount pAcc;
-	private PaneLogIn_Out pIO = new PaneLogIn_Out();
+	private PaneLogIn_Out pIO = null;
 	private JPanel panel = new JPanel();
 	private JPanel forAcc = new JPanel();
+	private static MainClient client;
+	private JFrame j = this;
+	private FrameCommunity fCom = null;
 
 //	private PaneTraCuuDanhPhap paneDP = new PaneTraCuuDanhPhap();
 
@@ -62,7 +59,20 @@ public class FrameMain extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		client = new MainClient("localhost", 12345);
+		try {
+			client.connect();
+//			String response = client.receiveString();
+//			System.out.println("Server response: " + response);
+			client.sendString("START");
+			System.out.println("done");
+			System.out.println(client.receiveString());
+		} catch (IOException ex) {
+			System.out.println("Client exception: " + ex.getMessage());
+			ex.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
+
 			public void run() {
 				try {
 					FrameMain frame = new FrameMain();
@@ -80,6 +90,12 @@ public class FrameMain extends JFrame {
 	 * @throws IOException
 	 */
 	public FrameMain() throws IOException {
+
+		// ------------------------
+		// Khởi tạo component với tham số
+		pIO = new PaneLogIn_Out(client);
+		// ------------------------
+
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(200, 100, 1300, 750);
@@ -140,12 +156,17 @@ public class FrameMain extends JFrame {
 		lbBTH.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				contentPane.remove(mainPane);
-				mainPane = paneBTH;
-				mainPane.setBounds(0, 76, 1285, 635);
-				contentPane.add(mainPane);
-				contentPane.revalidate();
-				contentPane.repaint();
+				try {
+					paneBTH = new PanelBangTuanHoan(client, j);
+					contentPane.remove(mainPane);
+					mainPane = paneBTH;
+					mainPane.setBounds(0, 76, 1285, 635);
+					contentPane.add(mainPane);
+					contentPane.revalidate();
+					contentPane.repaint();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 
 			}
 		});
@@ -159,11 +180,10 @@ public class FrameMain extends JFrame {
 		lbDanhPhap.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				try {
 					contentPane.remove(mainPane);
 					PaneTraCuuDanhPhap paneDP;
-					paneDP = new PaneTraCuuDanhPhap();
+					paneDP = new PaneTraCuuDanhPhap(client, j);
 					mainPane = paneDP;
 					mainPane.setBounds(0, 76, 1285, 635);
 					contentPane.add(mainPane);
@@ -183,6 +203,9 @@ public class FrameMain extends JFrame {
 				} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 			}
@@ -197,16 +220,26 @@ public class FrameMain extends JFrame {
 		lbCongDong.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				FrameCommunity note;
-				try {
-					note = new FrameCommunity();
-					note.setVisible(true);
-					note.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				} catch (IOException | BadLocationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				if (user != null) {
+					try {
+						fCom = new FrameCommunity(client,user );
+						fCom.setVisible(true);
+						fCom.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					} catch (IOException | BadLocationException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else {
 
+					pIO.fl.setVisible(true);
+					pIO.fl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					Notifications panel = new Notifications(pIO.fl.j, Notifications.Type.WARNING,
+							Location.BOTTOM_CENTER, "bạn cần đăng nhập để tiếp tục");
+					panel.showNotification();
+
+//					  Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
+//					    panel.showNotification();
+				}
 			}
 		});
 		lbCongDong.setBounds(235, 0, 65, 65);
@@ -224,10 +257,8 @@ public class FrameMain extends JFrame {
 					note.setVisible(true);
 					note.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-
 			}
 		});
 		lbCongDong_1.setBounds(312, 1, 65, 65);
@@ -240,7 +271,6 @@ public class FrameMain extends JFrame {
 		tf.setBounds(769, 11, 235, 46);
 		panel.add(tf);
 		tf.setColumns(10);
-//		tf.setBorder(new RoundBorder(40));
 
 		BufferedImage myIconSearch = ImageIO.read(new File("asset//img//search.png"));
 		Image imgIconSearch = myIconSearch.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
@@ -253,10 +283,10 @@ public class FrameMain extends JFrame {
 		forAcc.setLayout(null);
 		forAcc.setBounds(1045, 0, 239, 65);
 
+		// -----------------------
+		// Open luồng Account
 		pIO.btnStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-//					pIO.fl = new FrameLogin();
 				pIO.fl.setVisible(true);
 				pIO.fl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -265,17 +295,43 @@ public class FrameMain extends JFrame {
 
 		forAcc.add(pIO);
 		panel.add(forAcc);
+
+		// ---------------------
+		// Phương thức đăng nhập
 		pIO.fl.pLogin.btnLogIn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				User u = pIO.fl.pLogin.login();
-				if (u != null) {
-					try {
-						doneLogin(u);
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
+//				PairModel<String, String> acc = pIO.fl.pLogin.loginConditions();
+//				if (acc != null) {
+//					try {
+//						client.sendString("ACCOUNT");
+//						client.sendString("LOGIN");
+//						client.objectOutput.writeObject(acc);
+//						client.objectOutput.flush();
+//						System.out.println("done gửi pair");
+//						user = (User) client.objectInput.readObject();
+//						if (user != null) {
+//							pIO.fl.pLogin.showNotification(Notifications.Type.SUCCESS, "Đăng nhập thành công");
+//							doneLogin(user);
+//						} else {
+//							pIO.fl.pLogin.showNotification(Notifications.Type.WARNING,
+//									"Tên tài khoản hoặc mật khẩu không chính xác");
+//						}
+//					} catch (IOException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					} catch (ClassNotFoundException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//				} else {
+//					System.out.println("null roi");
+//				}
+				try {
+					performLogin(false);
+				} catch (BadLocationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 			}
@@ -287,9 +343,27 @@ public class FrameMain extends JFrame {
 		mainPane.setLayout(null);
 		mainPane.add(homePane);
 		contentPane.add(mainPane);
+
+		// -----------------------------------
+		// đóng chương trình - đóng luồng client
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				// Gọi client.close() trước khi đóng chương trình
+				try {
+					client.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+
+				// Đóng JFrame
+				dispose();
+			}
+		});
 	}
 
-	private void doneLogin(User u) throws IOException {
+	private void doneLogin(User u, boolean s) throws IOException, BadLocationException {
+
 		panel.remove(forAcc);
 		pAcc = new PaneAccount(u);
 		forAcc = pAcc;
@@ -299,7 +373,47 @@ public class FrameMain extends JFrame {
 		panel.revalidate();
 		panel.repaint();
 		pIO.fl.setVisible(false);
+		if (s) {
+			fCom = new FrameCommunity(client,user);
+			fCom.setVisible(true);
+			fCom.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			System.out.println("done");
+		}
 
 	}
 
+	private void performLogin(boolean s) throws BadLocationException {
+		PairModel<String, String> acc = pIO.fl.pLogin.loginConditions();
+		if (acc != null && user == null) {
+			try {
+				client.sendString("ACCOUNT");
+				client.sendString("LOGIN");
+				client.objectOutput.writeObject(acc);
+				client.objectOutput.flush();
+				System.out.println("done gửi pair");
+				user = (User) client.objectInput.readObject();
+				if (user != null) {
+					pIO.fl.pLogin.showNotification(Notifications.Type.SUCCESS, "Đăng nhập thành công");
+					doneLogin(user, s);
+					if (s) {
+//						fCom = new FrameCommunity();
+						fCom.setVisible(true);
+						fCom.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						System.out.println("done");
+					}
+				} else {
+					pIO.fl.pLogin.showNotification(Notifications.Type.WARNING,
+							"Tên tài khoản hoặc mật khẩu không chính xác");
+				}
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else {
+			System.out.println("null roi");
+		}
+	}
 }

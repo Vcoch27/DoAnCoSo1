@@ -30,7 +30,9 @@ public class PaneInputAvatar extends JPanel {
 	public JLabel lbErr;
 	private JFrame frame;
 	private ImageAvatar ia;
-	public byte[] imageBytes=null;
+	public byte[] imageBytes;
+
+	public User u;
 	private ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	private ImageIcon scalesA = new ImageIcon(
 			(ImageIO.read(new File("asset//img//avatarMacDinh.png"))).getScaledInstance(180, 180, Image.SCALE_SMOOTH));
@@ -41,10 +43,12 @@ public class PaneInputAvatar extends JPanel {
 	 * @throws IOException
 	 */
 	public PaneInputAvatar(JFrame frame, User u ) throws IOException {
-//		this.
+		this.u = u;
 		this.frame = frame;
 		ByteArrayOutputStream baoss = new ByteArrayOutputStream();
 		ImageIO.write(ImageIO.read(new File("asset//img//avatarMacDinh.png")), "png", baoss);
+		
+		//hình ảnh măc định
 		imageBytes = baos.toByteArray();
 		
 		setForeground(new Color(255, 255, 255));
@@ -73,7 +77,7 @@ public class PaneInputAvatar extends JPanel {
 		btnHoanThanh.setForeground(new Color(0, 0, 0));
 		btnHoanThanh.setFont(new Font("Arial", Font.PLAIN, 18));
 
-		btnHoanThanh.setText("Xác nhận");
+		btnHoanThanh.setText("Hoàn thành");
 		btnHoanThanh.setBounds(200, 393, 143, 43);
 		add(btnHoanThanh);
 
@@ -108,6 +112,9 @@ public class PaneInputAvatar extends JPanel {
 		lbErr.setBounds(109, 281, 301, 14);
 		add(lbErr);
 		setBg(scales);
+	}
+	public byte[] getImagesImage() {
+		return imageBytes;
 	}
 
 	private void setBg(ImageIcon s) {

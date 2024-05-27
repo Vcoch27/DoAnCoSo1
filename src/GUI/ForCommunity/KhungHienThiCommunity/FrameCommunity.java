@@ -2,6 +2,9 @@ package GUI.ForCommunity.KhungHienThiCommunity;
 
 import org.json.simple.JSONObject;
 
+import Client.MainClient.MainClient;
+import Model.User;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
+import javax.swing.JComboBox;
 
 public class FrameCommunity extends JFrame {
 
@@ -38,7 +42,7 @@ public class FrameCommunity extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrameCommunity frame = new FrameCommunity();
+					FrameCommunity frame = new FrameCommunity(null, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -53,7 +57,7 @@ public class FrameCommunity extends JFrame {
 	 * @throws IOException
 	 * @throws BadLocationException
 	 */
-	public FrameCommunity() throws IOException, BadLocationException {
+	public FrameCommunity(MainClient client,User u) throws IOException, BadLocationException {
 		setBackground(new Color(255, 255, 255));
 		setBounds(250, 150, 1285, 692);
 		getContentPane().setLayout(null);
@@ -148,6 +152,14 @@ public class FrameCommunity extends JFrame {
 		panel_1.add(toppost);
 		toppost.setVerticalAlignment(SwingConstants.BOTTOM);
 		toppost.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(786, 13, 345, 34);
+		comboBox.addItem("Top bài viết có lương vote cao nhất");
+		comboBox.addItem("Tóp những bài viết được thảo luận mới nhất");
+		
+		panel_1.add(comboBox);
+		
 	}
 
 	private void seeMore() throws IOException, BadLocationException {
@@ -161,5 +173,4 @@ public class FrameCommunity extends JFrame {
 		}
 		panelForSurf.add(seeMore);
 	}
-
 }

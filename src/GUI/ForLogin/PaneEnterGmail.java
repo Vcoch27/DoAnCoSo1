@@ -20,6 +20,8 @@ import component.PasswordField;
 import component.TextField;
 
 import javax.imageio.ImageIO;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.ImageIcon;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -103,16 +105,6 @@ public class PaneEnterGmail extends JPanel {
 		});
 
 		btnEnterGmail = new ButtonGradient();
-		btnEnterGmail.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEnterGmail.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-			}
-		});
 		btnEnterGmail.setForeground(new Color(0, 0, 0));
 		btnEnterGmail.setFont(new Font("Arial", Font.PLAIN, 18));
 		btnEnterGmail.setText("buttonGradient1");
@@ -145,10 +137,6 @@ public class PaneEnterGmail extends JPanel {
 		lbToLogIn.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbToLogIn.setBounds(286, 447, 111, 23);
 		add(lbToLogIn);
-//
-//		BufferedImage myIconBack = ImageIO.read(new File("asset//img//back.png"));
-//		Image imgIconBack = myIconBack.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-//		ImageIcon scalesBack = new ImageIcon(imgIconBack);
 
 		lblngKVi = new JLabel("Nhập gmail đăng ký:");
 		lblngKVi.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -172,6 +160,9 @@ public class PaneEnterGmail extends JPanel {
 		add(bg);
 	}
 
+	
+	//------------------------
+	//phương thức kiểm tra mail
 	public String tiepTuc() {
 		String gmail = tfMail.getText().trim();
 		System.out.println(gmail);
@@ -181,16 +172,35 @@ public class PaneEnterGmail extends JPanel {
 		} else if (!isGmailAddress(gmail)) {
 			lbErr.setText("Gmail không hợp lệ");
 			return "err";
+		} else if (!isValidEmailAddress(gmail)) {
+			lbErr.setText("Gmail không tồn tại");
+			return "err";
 		} else {
 			return gmail;
 		}
 	}
+	////----------------------
+	
+	
 
+	// giới hạn địa chỉ gmail
 	public boolean isGmailAddress(String email) {
 		String regex = "^[A-Za-z0-9._%+-]+@((([A-Za-z0-9-]+\\.)*gmail\\.[A-Za-z]{2,})|(vku\\.udn\\.vn))$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
+	}
+
+	// kiểm tra mail có tồn tại hay không
+	public static boolean isValidEmailAddress(String email) {
+		boolean result = true;
+		try {
+			InternetAddress emailAddr = new InternetAddress(email);
+			emailAddr.validate();
+		} catch (AddressException ex) {
+			result = false;
+		}
+		return result;
 	}
 
 	class HoverListener implements MouseListener {

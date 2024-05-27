@@ -10,6 +10,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import Client.MainClient.MainClient;
+import Model.ElementNguyenTo;
+import component.Notifications;
+import component.Notifications.Type;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Image;
@@ -25,6 +31,8 @@ public class PanelBangTuanHoan extends JPanel {
 	private final int ROWS = 7;
 	private final int COLS = 18;
 	private FrameHienThiChiTietNguyenTo chiTietNT;
+	private MainClient client;
+	private JFrame frame;
 	private String[] danhPhap = { "Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen", "Oxygen",
 			"Fluorine", "Neon", "Sodium", "Magnesium", "Aluminium", "Silicon", "Phosphorus", "Sulfur", "Chlorine",
 			"Argon", "Potassium", "Calcium", "Scandium", "Titanium", "Vanadium", "Chromium", "Manganese", "Iron",
@@ -50,7 +58,10 @@ public class PanelBangTuanHoan extends JPanel {
 	String bg;
 	Color bgPanel;
 
-	public PanelBangTuanHoan() throws IOException {
+	public PanelBangTuanHoan(MainClient client,JFrame f) throws IOException {
+		this.frame =f;
+		this.client = client;
+		
 		setBounds(0, 0, 1285, 635);
 		setLayout(null);
 
@@ -254,11 +265,12 @@ public class PanelBangTuanHoan extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						int soHieu = (int) oNT.getClientProperty("soHieu");
 						try {
-							chiTietNT = new FrameHienThiChiTietNguyenTo(soHieu);
-							chiTietNT.setVisible(true);
-							chiTietNT.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							openDetailNT(soHieu);
 
 						} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
@@ -295,11 +307,12 @@ public class PanelBangTuanHoan extends JPanel {
 					public void mouseClicked(MouseEvent e) {
 						int soHieu = (int) oNT.getClientProperty("soHieu");
 						try {
-							chiTietNT = new FrameHienThiChiTietNguyenTo(soHieu);
-							chiTietNT.setVisible(true);
-							chiTietNT.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+							openDetailNT(soHieu);
 
 						} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (ClassNotFoundException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
@@ -308,5 +321,39 @@ public class PanelBangTuanHoan extends JPanel {
 				add(oNT);
 			}
 		}
+	}
+	private void openDetailNT(int soHieu) throws IOException, ClassNotFoundException, UnsupportedAudioFileException, LineUnavailableException{
+		client.dataOutput.writeUTF("BTH");
+		client.dataOutput.writeUTF("GETNT");
+		client.objectOutput.writeObject(soHieu);
+		String s= client.dataInput.readUTF();
+		if(s.equals("DONE")) {
+			ElementNguyenTo e = (ElementNguyenTo) client.objectInput.readObject();
+			chiTietNT = new FrameHienThiChiTietNguyenTo(e);
+			chiTietNT.setVisible(true);
+			chiTietNT.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			
+		}else {
+			showNotification(Type.WARNING, "Nguyên tố chưa được cập nhật dữ liệu");
+		}
+		
+	}
+	private ElementNguyenTo selectElement(int soHieu) throws IOException, ClassNotFoundException {
+		client.dataOutput.writeUTF("BTH");
+		client.dataOutput.writeUTF("GETNT");
+		client.objectOutput.writeInt(soHieu);
+		String s= client.dataInput.readUTF();
+		if(s.equals("DONE")) {
+			ElementNguyenTo e = (ElementNguyenTo) client.objectInput.readObject();
+			return e;
+		}else {
+			showNotification(Type.WARNING, "Dữ liệu chưa được cập nhật dữ liệu!");
+		}
+		
+		return null;
+	}
+	public void showNotification(Notifications.Type type, String message) {
+	    Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
+	    panel.showNotification();
 	}
 }

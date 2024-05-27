@@ -1,8 +1,13 @@
 package GUI.ForTraCuuDanhPhap.KhungHienThiTCDP;
 
 import javax.swing.JPanel;
+
+import Client.MainClient.MainClient;
 import GUI.ForTraCuuDanhPhap.MucDanhPhapHienThi.PaneMenuLuaChonMucDanhPhap;
 import GUI.ForTraCuuDanhPhap.MucDanhPhapHienThi.PanelChiTietMucDanhPhap;
+import Model.ElementDanhPhapHoaHoc;
+import Model.ElementMucDanhPhap;
+import component.Notifications;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;
@@ -15,8 +20,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -27,7 +35,9 @@ public class PaneTraCuuDanhPhap extends JPanel {
 	public PanelChiTietMucDanhPhap chitiet;
 	private JPanel paneMainTraCuu;
 //	private boolean k = true;
-	private JLabel lbBack ;
+	private JLabel lbBack;
+	private MainClient client;
+	private JFrame j;
 
 	/**
 	 * Create the panel.
@@ -35,8 +45,12 @@ public class PaneTraCuuDanhPhap extends JPanel {
 	 * @throws IOException
 	 * @throws LineUnavailableException
 	 * @throws UnsupportedAudioFileException
+	 * @throws ClassNotFoundException
 	 */
-	public PaneTraCuuDanhPhap() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+	public PaneTraCuuDanhPhap(MainClient client, JFrame j)
+			throws IOException, UnsupportedAudioFileException, LineUnavailableException, ClassNotFoundException {
+		this.client = client;
+		this.j = j;
 		setBackground(new Color(64, 0, 128));
 		setLayout(null);
 		setBounds(0, 0, 1285, 635);
@@ -51,26 +65,27 @@ public class PaneTraCuuDanhPhap extends JPanel {
 		lblNewLabel.setBounds(471, -3, 343, 51);
 		panel.add(lblNewLabel);
 
-
 		BufferedImage myIconBack = ImageIO.read(new File("asset//img//back.png"));
 		Image imgIconBack = myIconBack.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon scalesBack = new ImageIcon(imgIconBack);
-		 lbBack = new JLabel(scalesBack);
-		 lbBack.addMouseListener(new MouseAdapter() {
-		 	@Override
-		 	public void mouseClicked(MouseEvent e) {
-		 		try {
+		lbBack = new JLabel(scalesBack);
+		lbBack.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
 					chuyen(false, "a");
 				} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
-		 	}
-		 });
-		 lbBack.setBounds(10, 2, 40, 44);
+			}
+		});
+		lbBack.setBounds(10, 2, 40, 44);
 		lbBack.setVisible(false);
 		panel.add(lbBack);
-
 
 		paneMainTraCuu = new JPanel();
 		paneMainTraCuu.setBounds(0, 57, 1285, 578);
@@ -78,15 +93,14 @@ public class PaneTraCuuDanhPhap extends JPanel {
 
 		chuyen(false, "a");
 
-
 	}
 
 	public JPanel getSwitch() {
 		return menuDP.getSwitch();
 	}
 
-	private void chuyen(boolean c, String code)
-			throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+	private void chuyen(boolean c, String code) throws MalformedURLException, UnsupportedAudioFileException,
+			IOException, LineUnavailableException, ClassNotFoundException {
 		if (!c) {
 
 			menuDP = new PaneMenuLuaChonMucDanhPhap();
@@ -96,6 +110,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 					try {
 						chuyen(true, "ion");
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+						e1.printStackTrace();
+					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -109,6 +125,9 @@ public class PaneTraCuuDanhPhap extends JPanel {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
 				}
 			});
@@ -120,15 +139,7 @@ public class PaneTraCuuDanhPhap extends JPanel {
 					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
-				}
-			});
-			menuDP.ocid.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					try {
-						chuyen(true, "oxide");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -139,7 +150,20 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "oxide");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			});
+			menuDP.ocid.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						chuyen(true, "oxide");
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -150,7 +174,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -161,7 +186,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -172,7 +198,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -183,7 +210,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -194,7 +222,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -205,7 +234,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -216,7 +246,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -227,7 +258,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -238,7 +270,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -249,7 +282,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -260,7 +294,8 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -271,35 +306,49 @@ public class PaneTraCuuDanhPhap extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						chuyen(true, "code");
-					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e1) {
+					} catch (UnsupportedAudioFileException | IOException | LineUnavailableException
+							| ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
 			});
 
-			
-			
-			
-			
-//			chitiet = new PanelChiTietMucDanhPhap();
 			remove(paneMainTraCuu);
 			paneMainTraCuu = menuDP;
 			paneMainTraCuu.setBounds(0, 54, 1285, 578);
 			add(paneMainTraCuu);
 			revalidate();
 			repaint();
-			 lbBack.setVisible(false);
-			
+			lbBack.setVisible(false);
+
 		} else {
-			chitiet = new PanelChiTietMucDanhPhap(code);
-			remove(paneMainTraCuu);
-			paneMainTraCuu = chitiet;
-			paneMainTraCuu.setBounds(0, 54, 1285, 578);
-			add(paneMainTraCuu);
-			revalidate();
-			repaint();
-			 lbBack.setVisible(true);
+			client.dataOutput.writeUTF("DANHPHAP");
+			client.dataOutput.writeUTF("GETDP");
+			client.dataOutput.writeUTF(code);
+			String s = client.dataInput.readUTF();
+			if (s.equals("DONE")) {
+				ElementMucDanhPhap eMDP = (ElementMucDanhPhap) client.objectInput.readObject();
+				ArrayList<ElementDanhPhapHoaHoc> listDP = (ArrayList<ElementDanhPhapHoaHoc>) client.objectInput
+						.readObject();
+				chitiet = new PanelChiTietMucDanhPhap(eMDP, listDP);
+				remove(paneMainTraCuu);
+				paneMainTraCuu = chitiet;
+				paneMainTraCuu.setBounds(0, 54, 1285, 578);
+				add(paneMainTraCuu);
+				revalidate();
+				repaint();
+				lbBack.setVisible(true);
+				Notifications panel = new Notifications(j, Notifications.Type.SUCCESS,
+						Notifications.Location.BOTTOM_CENTER, "lấy dữ liệu " + eMDP.getIdMucDanhPhap() + " thành công");
+				panel.showNotification();
+			} else {
+				Notifications panel = new Notifications(j, Notifications.Type.WARNING,
+						Notifications.Location.BOTTOM_CENTER, "Dữ liệu " + code + " chưa được cập nhật");
+				panel.showNotification();
+			}
+
 		}
 	}
+
 }

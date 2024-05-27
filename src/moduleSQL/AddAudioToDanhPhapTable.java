@@ -18,7 +18,7 @@ public class AddAudioToDanhPhapTable {
         String password = "PHW#84#jeor"; // Replace with your MySQL password
 
         Scanner sc = new Scanner(System.in);
-
+        //-----------------------------------
         System.out.println("Nhập kí hiệu hóa học:");
         String kihieuhoahoc = sc.nextLine();
 
@@ -30,8 +30,11 @@ public class AddAudioToDanhPhapTable {
 
         // Adding audio files to the database
         addAudioToDatabase(url, username, password, kihieuhoahoc, filePathUS, filePathUK);
-
-        // Retrieving audio files from the database
+        
+        
+        
+        //--------------------
+        //Hủy comment và comment input line 22 đến 32 để phát dữ liệu
 //        retrieveAudioFromDatabase(url, username, password, kihieuhoahoc);
 
         // Close resources
@@ -65,6 +68,7 @@ public class AddAudioToDanhPhapTable {
         }
     }
 
+    //theo lấy và phát audio từ database/ sử dụng file temp
     public static void retrieveAudioFromDatabase(String url, String username, String password,
                                                  String kihieuhoahoc) {
         try (

@@ -7,9 +7,11 @@ import javax.swing.*;
 
 import Controller.ControlDanhPhap.ControllerMucDanhPhap;
 import GUI.ElementPublic.PanelHienThiListDanhPhap;
+import Model.ElementDanhPhapHoaHoc;
 import Model.ElementMucDanhPhap;
 import component.ButtonGradient;
 import component.ImageAvatar;
+import component.Notifications;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class PanelChiTietMucDanhPhap extends JPanel {
 	public ButtonGradient btnStart;
@@ -30,9 +33,10 @@ public class PanelChiTietMucDanhPhap extends JPanel {
      * @throws UnsupportedAudioFileException 
      * @throws MalformedURLException 
      */
-    public PanelChiTietMucDanhPhap(String id) throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
-    	ElementMucDanhPhap eMDP = ControllerMucDanhPhap.getMucDanhPhap(id);
+    public PanelChiTietMucDanhPhap(ElementMucDanhPhap eMDP, ArrayList<ElementDanhPhapHoaHoc> list) throws MalformedURLException, UnsupportedAudioFileException, IOException, LineUnavailableException {
+//    	ElementMucDanhPhap eMDP = ControllerMucDanhPhap.getMucDanhPhap(id);
 //    	eDM = eMDP;
+    	
     	setBounds(0, 0, 1285, 588);
         setLayout(null);
 
@@ -76,7 +80,7 @@ public class PanelChiTietMucDanhPhap extends JPanel {
         JPanel panel_1 = new JPanel();
 		panel_1.setBounds(300, 277, 673, 300);
 		panel_1.setLayout(null);
-		PanelHienThiListDanhPhap listdp = new PanelHienThiListDanhPhap(ControllerMucDanhPhap.getListDanhPhap(id));
+		PanelHienThiListDanhPhap listdp = new PanelHienThiListDanhPhap(list);
 		listdp.setBounds(0, 0, 670, 300);
 		panel_1.add(listdp);
 		add(panel_1);

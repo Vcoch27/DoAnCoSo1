@@ -1,6 +1,8 @@
 package Model;
 
-public class ElementDanhPhapHoaHoc {
+import java.io.Serializable;
+
+public class ElementDanhPhapHoaHoc implements Serializable {
 	private String idDanhPhap;
 	private String danhPhapCu;
 	private String kiHieu;

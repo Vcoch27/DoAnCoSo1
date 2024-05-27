@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
-public class User {
+public class User implements Serializable{
 	private String userName;
 	private String gmail;
 	private String passwordHash;
@@ -68,6 +69,14 @@ public class User {
 		this.gmail = gmail;
 		this.passwordHash = null;
 		this.fullName = fullName;
+		this.dateJoined = null;
+		this.avatar = avatar;
+	}
+	public User( byte[] avatar) {
+		this.userName = "";
+		this.gmail = "";
+		this.passwordHash = "";
+		this.fullName = "";
 		this.dateJoined = null;
 		this.avatar = avatar;
 	}

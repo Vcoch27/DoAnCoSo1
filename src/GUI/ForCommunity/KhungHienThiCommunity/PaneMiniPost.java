@@ -22,6 +22,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
 
+import GUI.ElementPublic.ElementListNote;
 import GUI.ForCommunity.ElementForCommunity.ElementForPost.ElementComment;
 import component.ButtonGradient;
 
@@ -92,8 +93,15 @@ public class PaneMiniPost extends JPanel {
 						+ "Mất gốc thì học lại gốc chứ sao giờ đúng ko :)) Phần đông các bạn khổ sở với tiếng Anh ở Đại học là vì các bạn mất căn bản từ khi còn là học sinh."
 						+ "\n#2: ĐỪNG ĐỂ TIẾNG ANH THÀNH NIỀM Đ.AU 😩\r\n"
 						+ "Ngoài học chủ động thì tui cũng để mình tiếp xúc bị động với tiếng Anh nhiều hơn");
-		textPane.setBounds(0, 3, 978, 213);
+		textPane.setBounds(0, 3, 978, 205);
 		mainContent.add(textPane);
+		
+		if(true) {
+			JPanel panelFileNote = new ElementListNote(true);
+			panelFileNote.setBounds(434, 210, 461, 55);
+			mainContent.add(panelFileNote);
+		}
+		
 
 		reduce.addMouseListener(new MouseAdapter() {
 			@Override

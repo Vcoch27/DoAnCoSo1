@@ -13,6 +13,7 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import Controller.ControlUser.LoginUser;
+import Model.PairModel;
 import Model.User;
 import component.ButtonGradient;
 import component.Notifications;
@@ -56,6 +57,7 @@ public class PaneLogin extends JPanel {
 	private JLabel lblBnChaC;
 	public JLabel lbCreate;
 	private JFrame frame;
+
 	/**
 	 * Create the panel.
 	 * 
@@ -256,33 +258,35 @@ public class PaneLogin extends JPanel {
 		}
 	}
 
-	public User login() {
+	public PairModel<String, String> loginConditions() {
 		String username = tfTK.getText();
 		char[] pw = pwMK.getPassword();
+		PairModel<String, String> acc = null;
 		System.out.println(new String(pw));
 		if (username.isEmpty() || username.equals("tên tài khoản") || pw.toString().isEmpty()
 				|| pw.toString().equals("mật khẩu")) {
 			showNotification(Notifications.Type.WARNING, "Hãy nhập đầy đủ thông tin");
 			return null;
-		}else {
-			try {
-				User u = LoginUser.login(username, new String(pw));
-				if(u!=null) {
-					showNotification(Notifications.Type.SUCCESS, "Đăng nhập thành công");
-					return u;
-					
-				}else {
-					showNotification(Notifications.Type.WARNING, "Tên tài khoản hoặc mật khẩu không chính xác");
-				}
-			} catch (Exception e) {
-				showNotification(Notifications.Type.WARNING, "Đăng nhập không thành công");
-			}
+		} else {
+			return new PairModel<String, String>(username, new String(pw));
+//			try {
+//				User u = LoginUser.login(username, new String(pw));
+//				if(u!=null) {
+//					showNotification(Notifications.Type.SUCCESS, "Đăng nhập thành công");
+//					return u;
+//					
+//				}else {
+//					showNotification(Notifications.Type.WARNING, "Tên tài khoản hoặc mật khẩu không chính xác");
+//				}
+//			} catch (Exception e) {
+//				showNotification(Notifications.Type.WARNING, "Đăng nhập không thành công");
+//			}
 		}
-		
-		return null;
+
 	}
-	private void showNotification(Notifications.Type type, String message) {
-	    Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
-	    panel.showNotification();
+
+	public void showNotification(Notifications.Type type, String message) {
+		Notifications panel = new Notifications(frame, type, Notifications.Location.BOTTOM_CENTER, message);
+		panel.showNotification();
 	}
 }

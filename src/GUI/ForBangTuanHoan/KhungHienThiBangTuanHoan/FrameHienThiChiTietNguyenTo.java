@@ -58,10 +58,10 @@ public class FrameHienThiChiTietNguyenTo extends JFrame {
 	 * @throws LineUnavailableException
 	 * @throws UnsupportedAudioFileException
 	 */
-	public FrameHienThiChiTietNguyenTo(int idNT) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+	public FrameHienThiChiTietNguyenTo(ElementNguyenTo eNT) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 		setResizable(false);
-		eNT = ForNguyenTo.getNguyenTo(idNT);
-		System.out.println(idNT);
+//		eNT = ForNguyenTo.getNguyenTo(idNT);
+//		System.out.println(idNT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 688, 819);
 		contentPane = new JPanel();

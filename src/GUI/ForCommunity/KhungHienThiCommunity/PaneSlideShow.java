@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import Client.MainClient.MainClient;
 import GUI.ForCommunity.ElementForCommunity.ElementForPost.*;
 
 
@@ -39,13 +40,15 @@ public class PaneSlideShow extends JPanel {
 	private JLabel titleForPost2;
 	private JLabel titleForPost3;
 	private JPanel panel;
+	private MainClient client;
 
 	/**
 	 * Create the panel.
 	 * 
 	 * @throws IOException
 	 */
-	public PaneSlideShow() throws IOException {
+	public PaneSlideShow(MainClient client) throws IOException {
+		this.client = client;
 		setBackground(new Color(0, 128, 192));
 
 		setLayout(null);
@@ -192,5 +195,10 @@ public class PaneSlideShow extends JPanel {
 		// Cáº­p nháº­t currentIndex Ä‘á»ƒ hiá»ƒn thá»‹ sá»± kiá»‡n má»›i
 		currentIndex = texts.length - 3; // Hiá»ƒn thá»‹ sá»± kiá»‡n má»›i thÃªm vÃ o
 		showTextAtIndex(currentIndex); // Hiá»ƒn thá»‹ sá»± kiá»‡n má»›i
+	}
+	private void getTopPost() throws IOException {
+		client.dataOutput.writeUTF("POST");
+		client.dataOutput.writeUTF("GETTOP");
+		
 	}
 }
